@@ -15,6 +15,7 @@ function start() {
 
                     const canvas = document.createElement("canvas");
                     canvas.setAttribute("id","canvas"+i);
+                    canvas.setAttribute("hidden");
                     const context = canvas.getContext('2d', {willReadFrequently: true});
 
                     document.getElementById("canvases").appendChild(canvas);
