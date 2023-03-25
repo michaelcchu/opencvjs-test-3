@@ -15,7 +15,7 @@ function start() {
 
                     const canvas = document.createElement("canvas");
                     canvas.setAttribute("id","canvas"+i);
-                    //canvas.setAttribute("hidden");
+                    canvas.hidden = true;
                     const context = canvas.getContext('2d', {willReadFrequently: true});
 
                     document.getElementById("canvases").appendChild(canvas);
@@ -40,7 +40,13 @@ function start() {
                         const img_rgb = cv.imread('canvas'+i);
                         const img_gray = new cv.Mat();
                         cv.cvtColor(img_rgb, img_gray, cv.COLOR_BGR2GRAY);
-                        cv.imshow("img_gray", img_gray);
+
+                        
+                        const canvas = document.createElement("canvas");
+                        canvas.setAttribute("id","img_gray"+i);
+                        document.getElementById("canvases").appendChild(canvas);
+
+                        cv.imshow("img_gray"+i, img_gray);
                     
                         const number_of_templates = 9;
                     
