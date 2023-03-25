@@ -1,9 +1,14 @@
-.wrapper {
+#canvases {
     position: relative;
 }
 
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
 .wrapper canvas {
-    position: relative; 
-    left: 0; 
-    top: 0; 
+    padding: 50px;
+    grid-row-start: 1;
+    grid-column-start: 1;
 }
