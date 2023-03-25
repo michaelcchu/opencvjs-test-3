@@ -36,15 +36,24 @@ function start() {
                     var renderingTask = page.render(renderContext);
 
                     renderingTask.promise.then(function() {
+                        // create the appropriate canvas setup
+                        const wrapper = document.createElement("div");
+                        wrapper.setAttribute("class","wrapper");
+                        
+                        for (let id of ["img_gray", "notes", "left_edges", 
+                            "note_center_points", "left_edge_center_points",
+                            "cursor_layer"]) {
+                            const canvas = document.createElement("canvas");
+                            canvas.setAttribute("id",id+i);
+                            wrapper.appendChild(canvas);
+                        }
+      
+                        document.getElementById("canvases").appendChild(wrapper);
+
                         // do drawing/graphics/image-processing/computer-vision stuff
                         const img_rgb = cv.imread('canvas'+i);
                         const img_gray = new cv.Mat();
                         cv.cvtColor(img_rgb, img_gray, cv.COLOR_BGR2GRAY);
-
-                        
-                        const canvas = document.createElement("canvas");
-                        canvas.setAttribute("id","img_gray"+i);
-                        document.getElementById("canvases").appendChild(canvas);
 
                         cv.imshow("img_gray"+i, img_gray);
                     
@@ -102,8 +111,8 @@ function start() {
                             }
                         }
                     
-                        cv.imshow('notes', notes);
-                        cv.imshow('left_edges', clefs);
+                        cv.imshow('notes'+i, notes);
+                        cv.imshow('left_edges'+i, clefs);
                     
                     
                         // Find the contours of the notes.
@@ -127,7 +136,6 @@ function start() {
                             console.log(contours.size());
                     
                             // draw contours
-                            const color = new cv.Scalar(0, 0, 255, 255);
                             const centroids = [];
                             for (let i = 0; i < contours.size(); ++i) {
                                 const contour = contours.get(i);
@@ -145,9 +153,10 @@ function start() {
                             return centroids;
                         }
                     
-                        let centroids = process_contours(notes, 'note_center_points');
+                        let centroids = process_contours(notes, 
+                            'note_center_points'+i);
                         const stave_centroids = process_contours(clefs, 
-                            'left_edge_center_points');
+                            'left_edge_center_points'+i);
                     
                         const stave_count = stave_centroids.length;
                         const notes_by_stave = [...Array(stave_count)].map(e => []);
@@ -180,9 +189,9 @@ function start() {
                     
                         // cursor
                         function createCursor() {
-                            const canvas = document.getElementById('cursor_layer');
-                            canvas.width = document.getElementById('img_gray').width;
-                            canvas.height = document.getElementById('img_gray').height;
+                            const canvas = document.getElementById('cursor_layer'+i);
+                            canvas.width = document.getElementById('img_gray'+i).width;
+                            canvas.height = document.getElementById('img_gray'+i).height;
                             const context = canvas.getContext('2d');
                             context.globalAlpha = 0.5;
                             

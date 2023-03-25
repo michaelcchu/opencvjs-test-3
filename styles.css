@@ -1,0 +1,9 @@
+.wrapper {
+    position: relative;
+}
+
+.wrapper canvas {
+    position: relative; 
+    left: 0; 
+    top: 0; 
+}
