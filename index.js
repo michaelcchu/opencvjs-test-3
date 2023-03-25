@@ -8,14 +8,14 @@ function start() {
                 // you can now use *pdf* here
                 pdf.getPage(i+1).then(function(page) {
                     // you can now use *page* here
-                    var scale = 1;
+                    var scale = 1.5;
                     var viewport = page.getViewport({ scale: scale, });
                     // Support HiDPI-screens.
                     var outputScale = window.devicePixelRatio || 1;
 
                     const canvas = document.createElement("canvas");
                     canvas.setAttribute("id","canvas"+i);
-                    canvas.setAttribute("hidden");
+                    //canvas.setAttribute("hidden");
                     const context = canvas.getContext('2d', {willReadFrequently: true});
 
                     document.getElementById("canvases").appendChild(canvas);
